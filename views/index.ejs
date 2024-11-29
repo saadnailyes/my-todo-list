@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do Application</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f9;
+        }
+        h1 {
+            text-align: center;
+        }
+        form {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        input[type="text"] {
+            padding: 10px;
+            width: 300px;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            padding: 10px;
+            background: #fff;
+            margin: 10px 0;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .actions button {
+            margin-left: 10px;
+            padding: 5px 10px;
+            font-size: 14px;
+        }
+        .edit-btn {
+            background-color: #ffc107;
+        }
+        .delete-btn {
+            background-color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <h1>To-Do Application</h1>
+
+    <!-- Form to Add Task -->
+    <form action="/tasks" method="POST">
+        <input type="text" name="task" placeholder="Enter your task..." required>
+        <button type="submit">Add Task</button>
+    </form>
+
+    <!-- List of Tasks -->
+    <ul>
+        <% tasks.forEach(task => { %>
+            <li>
+                <span><%= task.name %></span>
+                <div class="actions">
+                    <!-- Edit Button -->
+                    <form action="/tasks/<%= task.id %>?_method=PUT" method="POST" style="display: inline;">
+                        <input type="text" name="task" value="<%= task.name %>" required>
+                        <button class="edit-btn" type="submit">Edit</button>
+                    </form>
+                    
+                    <!-- Delete Button -->
+                    <form action="/tasks/<%= task.id %>?_method=DELETE" method="POST" style="display: inline;">
+                        <button class="delete-btn" type="submit">Delete</button>
+                    </form>
+                </div>
+            </li>
+        <% }); %>
+    </ul>
+</body>
+</html>
